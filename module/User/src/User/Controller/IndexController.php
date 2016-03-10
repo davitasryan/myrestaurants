@@ -6,7 +6,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use User\Model\User;
 use User\Form\UserForm;
-use Zend\Crypt\Password\Bcrypt;
+use Application\Utility\UserPassword;
 
 class IndexController extends AbstractActionController
 {
@@ -131,7 +131,8 @@ class IndexController extends AbstractActionController
     }
 	
 	public static function criptPassword($password){
-		$bcrypt = new Bcrypt();
-		return $bcrypt->create($password);
+		$userPassword = new UserPassword();
+		$encyptPass = $userPassword->create($password);
+		return $encyptPass;
 	}
 }

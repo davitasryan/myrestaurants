@@ -95,14 +95,14 @@ class Restaurant
                 'name'     => 'lat',
                 'required' => true,
                 'filters'  => array(
-                    array('name' => 'Float'),
+                    array('name' => 'Digits'),
                 ),
             ));
 			$inputFilter->add(array(
                 'name'     => 'lng',
                 'required' => true,
                 'filters'  => array(
-                    array('name' => 'Float'),
+                    array('name' => 'Digits'),
                 ),
             ));
 			
@@ -138,7 +138,7 @@ class Restaurant
                         'options' => array(
                             'encoding' => 'UTF-8',
                             'min'      => 1,
-                            'max'      => 20,
+                            'max'      => 200,
                         ),
                     ),
                 ),

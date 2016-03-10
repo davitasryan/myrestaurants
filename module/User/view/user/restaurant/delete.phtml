@@ -1,21 +1,21 @@
 <?php
-$title = 'Delete user';
+$title = 'Delete restaurant';
 $this->headTitle($title);
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 <p>Are you sure that you want to delete
-    '<?php echo $this->escapeHtml($user->name); ?>' by
-    '<?php echo $this->escapeHtml($user->email); ?>'?
+    '<?php echo $this->escapeHtml($restaurant->name); ?>' in address
+    '<?php echo $this->escapeHtml($restaurant->address); ?>'?
 </p>
 <?php
-$url = $this->url('user', array(
-    'action' => 'delete',
+$url = $this->url('restaurant', array(
+	'action' => 'delete',
     'id'     => $this->id,
 ));
 ?>
 <form action="<?php echo $url; ?>" method="post">
 <div>
-    <input type="hidden" name="id" value="<?php echo (int) $user->id; ?>" />
+    <input type="hidden" name="id" value="<?php echo (int) $restaurant->id; ?>" />
     <input type="submit" name="del" value="Yes" />
     <input type="submit" name="del" value="No" />
 </div>

@@ -31,14 +31,23 @@
             'options' => array(
                 'label' => 'Address',
             ),
+			'attributes' => array(
+				'id'  => 'address',
+			),
         ));
 		$this->add(array(
             'name' => 'lat',
             'type' => 'Hidden',
+			'attributes' => array(
+				'id'  => 'latitude',
+			),
         ));
 		$this->add(array(
             'name' => 'lng',
             'type' => 'Hidden',
+			'attributes' => array(
+				'id'  => 'longitude',
+			),
         ));
 		$this->add(array(
             'name' => 'site',
@@ -46,6 +55,9 @@
             'options' => array(
                 'label' => 'Url',
             ),
+			'attributes' => array(
+				'id'  => 'site',
+			),
         ));
 		$this->add(array(
             'name' => 'contact',
@@ -53,6 +65,9 @@
             'options' => array(
                 'label' => 'Contact',
             ),
+			'attributes' => array(
+				'id'  => 'contact',
+			),
         ));		
 
         $this->add(array(

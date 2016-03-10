@@ -34,7 +34,7 @@ class RestaurantController extends AbstractActionController
                 $rest->exchangeArray($form->getData());
                 $this->getRestaurantTable()->saveRestaurant($rest);
 
-                return $this->redirect()->toRoute('rest');
+                return $this->redirect()->toRoute('restaurant');
             }
         }
         return array('form' => $form);
@@ -60,7 +60,7 @@ class RestaurantController extends AbstractActionController
         }
 		
 		
-        $form  = new UserForm();
+        $form  = new RestaurantForm();
 		 
         $form->bind($rest);
         $form->get('submit')->setAttribute('value', 'Edit');
@@ -114,7 +114,7 @@ class RestaurantController extends AbstractActionController
 
          return array(
              'id'    => $id,
-             'user' => $this->getRestaurantTable()->getRestaurant($id)
+             'restaurant' => $this->getRestaurantTable()->getRestaurant($id)
          );
     }
 	 

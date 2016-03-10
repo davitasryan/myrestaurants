@@ -8,13 +8,18 @@
  
 <div style="height:800px">
  <?php
- $form->setAttribute('action', $this->url('user', array('action' => 'add')));
+ $form->setAttribute('action', $this->url('restaurant', array('action' => 'add')));
  $form->prepare();
 
  echo $this->form()->openTag($form);
  echo $this->formHidden($form->get('id'));
+ echo $this->formHidden($form->get('lat'));
+ echo $this->formHidden($form->get('lng'));
  echo $this->formRow($form->get('name'));
  echo $this->formRow($form->get('address'));
+ echo $this->formRow($form->get('contact'));
+ echo $this->formRow($form->get('site'));
+ echo $this->formSubmit($form->get('submit'));
  echo $this->form()->closeTag();
  
 
@@ -27,8 +32,8 @@
         padding: 0;
       }
       #map {
-        height: 20%;
-		width :20%;
+        height: 40%;
+		width :40%;
       }
       .controls {
         margin-top: 10px;
@@ -80,14 +85,6 @@
 
  
 <script>
-      // This example adds a search box to a map, using the Google Place Autocomplete
-      // feature. People can enter geographical searches. The search box will return a
-      // pick list containing a mix of places and predicted search terms.
-
-      // This example requires the Places library. Include the libraries=places
-      // parameter when you first load the API. For example:
-      // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
-
       function initAutocomplete() {
         var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -33.8688, lng: 151.2195},
@@ -114,16 +111,21 @@
           if (places.length == 0) {
             return;
           }
+		  
+		  
+		  //document.getElementById('address') = places.address;
 
           // Clear out the old markers.
           markers.forEach(function(marker) {
             marker.setMap(null);
           });
           markers = [];
-
+		  var address;
           // For each place, get the icon, name and location.
           var bounds = new google.maps.LatLngBounds();
           places.forEach(function(place) {
+			  console.log(place);
+			address = place.formatted_address;
             var icon = {
               url: place.icon,
               size: new google.maps.Size(71, 71),
@@ -131,6 +133,11 @@
               anchor: new google.maps.Point(17, 34),
               scaledSize: new google.maps.Size(25, 25)
             };
+			document.getElementById('address').value = address;
+			document.getElementById('contact').value = place.formatted_phone_number;
+			document.getElementById('site').value = place.website;
+			document.getElementById('latitude').value = place.geometry.location.lat();
+			document.getElementById('longitude').value = place.geometry.location.lng();
 
             // Create a marker for each place.
             markers.push(new google.maps.Marker({
@@ -152,7 +159,6 @@
       }
 
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initAutocomplete"
-         async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initAutocomplete"async defer></script>
 
 </div>
