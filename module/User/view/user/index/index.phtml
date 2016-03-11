@@ -2,11 +2,10 @@
  
 $title = 'Users';
 $this->headTitle($title);
+
+$logUser = $this->identity();
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
-<p>
-    <a href="<?php echo $this->url('user', array('action'=>'add'));?>">Register</a>
-</p>
 
 <table class="table">
 <tr>
@@ -19,11 +18,16 @@ $this->headTitle($title);
     <td><?php echo $this->escapeHtml($user->name);?></td>
     <td><?php echo $this->escapeHtml($user->email);?></td>
     <td>
-        <a href="<?php echo $this->url('user',
-            array('action'=>'edit', 'id' => $user->id));?>">Update account</a>
-        <a href="<?php echo $this->url('user',
-            array('action'=>'delete', 'id' => $user->id));?>">Delete account</a>
+		<?php if($logUser && $logUser->id == $user->id){ ?>
+			<a href="<?php echo $this->url('user',
+				array('action'=>'edit', 'id' => $user->id));?>">Update account</a>
+			<a href="<?php echo $this->url('user',
+				array('action'=>'delete', 'id' => $user->id));?>">Delete account</a>
+		<?php } ?>
+			<a href="<?php echo $this->url('user',
+				array('action'=>'profile', 'id' => $user->id));?>">Profile</a>
     </td>
+	
 </tr>
 <?php endforeach; ?>
 </table>

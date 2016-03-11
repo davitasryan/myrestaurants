@@ -87,8 +87,8 @@
 <script>
       function initAutocomplete() {
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: -33.8688, lng: 151.2195},
-          zoom: 13,
+          center: {lat: 40.19886899999999, lng: 44.528594},
+          zoom: 17,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         });
 
@@ -134,8 +134,12 @@
               scaledSize: new google.maps.Size(25, 25)
             };
 			document.getElementById('address').value = address;
-			document.getElementById('contact').value = place.formatted_phone_number;
-			document.getElementById('site').value = place.website;
+			if(typeof(place.formatted_phone_number) != 'undefined')
+				document.getElementById('contact').value = place.formatted_phone_number;
+			
+			if(typeof(place.website) != 'undefined')
+				document.getElementById('site').value = place.website;
+				
 			document.getElementById('latitude').value = place.geometry.location.lat();
 			document.getElementById('longitude').value = place.geometry.location.lng();
 
@@ -157,6 +161,13 @@
           map.fitBounds(bounds);
         });
       }
+	  
+	$(document).keypress(
+		function(event){
+			if (event.which == '13') {
+				event.preventDefault();
+			}
+	});
 
     </script>
     <script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initAutocomplete"async defer></script>

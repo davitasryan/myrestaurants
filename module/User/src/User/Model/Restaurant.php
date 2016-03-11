@@ -5,7 +5,6 @@ use Zend\InputFilter\InputFilter;
 use Zend\InputFilter\InputFilterAwareInterface;
 use Zend\InputFilter\InputFilterInterface;
 
-
 class Restaurant
 {
 	public $id;
@@ -95,14 +94,16 @@ class Restaurant
                 'name'     => 'lat',
                 'required' => true,
                 'filters'  => array(
-                    array('name' => 'Digits'),
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
                 ),
             ));
 			$inputFilter->add(array(
                 'name'     => 'lng',
                 'required' => true,
                 'filters'  => array(
-                    array('name' => 'Digits'),
+                    array('name' => 'StripTags'),
+                    array('name' => 'StringTrim'),
                 ),
             ));
 			
@@ -124,6 +125,7 @@ class Restaurant
                     ),
                 ),
             ));
+			
 			
 			$inputFilter->add(array(
                 'name'     => 'site',

@@ -4,6 +4,7 @@ return array(
         'invokables' => array(
             'User\Controller\Index' => 'User\Controller\IndexController',
 			'User\Controller\Restaurant' => 'User\Controller\RestaurantController',
+			'User\Controller\UserFavoriteRestaurant' => 'User\Controller\UserFavoriteRestaurantController',
         ),
     ),
 	 
@@ -19,6 +20,20 @@ return array(
                     ),
                     'defaults' => array(
                         'controller' => 'User\Controller\Index',
+                        'action'     => 'index',
+                    ),
+                ),
+            ),
+			'userFavoriteRestaurant' => array(
+                'type'    => 'segment',
+                'options' => array(
+                    'route'    => '/userfavoriterestaurant[/:action][/:id]',
+                    'constraints' => array(
+                        'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
+                        'id'     => '[0-9]+',
+                    ),
+                    'defaults' => array(
+                        'controller' => 'User\Controller\UserFavoriteRestaurant',
                         'action'     => 'index',
                     ),
                 ),

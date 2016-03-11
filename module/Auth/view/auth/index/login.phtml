@@ -1,0 +1,27 @@
+<h1>Login </h1>
+<?php
+$form = $this->form;
+$form->setAttribute('action', $this->url('auth/default', array('controller' => 'index', 'action' => 'login')));
+$form->prepare();
+
+echo $this->form()->openTag($form);
+echo $this->formRow($form->get('email'));
+echo $this->formRow($form->get('password'));
+echo $this->formRow($form->get('rememberme'));
+echo $this->formSubmit($form->get('submit'));
+echo $this->form()->closeTag();
+?>
+<?php // view helper
+    if ($user = $this->identity()) {
+        echo 'Logged in as ' . $this->escapeHtml($user->name);
+?>		
+ | <a href="<?php echo $this->url('auth/default', array('controller' => 'index', 'action' => 'logout'));?>"><?php echo $this->translate('Logout'); ?></a> 
+<?php
+    } else {
+        echo 'Not logged in';
+    }
+?>
+<p>
+	<a href="<?php echo $this->url('user', array('controller' => 'user', 'action' => 'add'));?>"><?php echo $this->translate('Register'); ?></a>
+	
+</p>

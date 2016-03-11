@@ -29,7 +29,7 @@ class RestaurantTable
         }
         return $row;
     }
-
+	
     public function saveRestaurant(Restaurant $rest)
     {
         $data = array(

@@ -33,6 +33,7 @@ class Module
             $this,
             'afterDispatch'
         ), -100);
+		
     }
 
     public function getConfig()
@@ -59,7 +60,7 @@ class Module
         
         /* Offline pages not needed authentication */  
         $whiteList = array (
-			'User\Controller\Login-index',
+			'Auth\Controller\Index-login',
 			'User\Controller\Index-add',
 		);
         
@@ -71,16 +72,21 @@ class Module
         
         $session = new Container('User');
         
-        if ($session->offsetExists ( 'email' )) {
-            if ($requestedResourse == 'Application\Controller\Login-index' || in_array ( $requestedResourse, $whiteList )) {
-                $url = '/application/index';
+		
+		$auth = new AuthenticationService();
+		$storage = $auth->getStorage();
+		$identity = (array)$auth->getIdentity();
+		//var_dump( $auth->hasIdentity() , $identity["id"]);
+		
+        if ($auth->hasIdentity()) {
+            if ($requestedResourse == 'Auth\Controller\Index-login' || in_array ( $requestedResourse, $whiteList )) {
+                $url = '/user/index';
                 $response->setHeaders ( $response->getHeaders ()->addHeaderLine ( 'Location', $url ) );
                 $response->setStatusCode ( 302 );
             }
         }else{
-            
-            if ($requestedResourse != 'Application\Controller\Login-index' && ! in_array ( $requestedResourse, $whiteList )) {
-                 $url = '/application/login';                
+            if ($requestedResourse != 'Auth\Controller\Index-login' && ! in_array ( $requestedResourse, $whiteList )) {
+                 $url = '/auth/index/login';                
                 $response->setHeaders ( $response->getHeaders ()->addHeaderLine ( 'Location', $url ) );
                 $response->setStatusCode ( 302 ); 
             }
@@ -109,4 +115,5 @@ class Module
             ),
         );
     }
+	
 }

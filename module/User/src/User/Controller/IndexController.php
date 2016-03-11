@@ -6,7 +6,7 @@ use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 use User\Model\User;
 use User\Form\UserForm;
-use Application\Utility\UserPassword;
+//use Zend\Crypt\Password\Bcrypt;
 
 class IndexController extends AbstractActionController
 {
@@ -22,7 +22,7 @@ class IndexController extends AbstractActionController
     public function addAction()
     {
 		$form = new UserForm();
-        $form->get('submit')->setValue('Add');
+        $form->get('submit')->setValue('Register');
 
         $request = $this->getRequest();
         if ($request->isPost()) {
@@ -112,7 +112,7 @@ class IndexController extends AbstractActionController
              }
 
              // Redirect to list of albums
-             return $this->redirect()->toRoute('user');
+             return $this->redirect()->toRoute('auth/default', array('controller' => 'index', 'action' => 'logout'));	
          }
 
          return array(
@@ -120,6 +120,27 @@ class IndexController extends AbstractActionController
              'user' => $this->getUserTable()->getUser($id)
          );
     }
+	
+	public function profileAction()
+	{
+		$id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('user');
+        }
+		
+		try {
+            $userDetails = $this->getUserTable()->getUser($id);
+        }
+        catch (\Exception $ex) {
+            return $this->redirect()->toRoute('user', array(
+                'action' => 'index'
+            ));
+        }
+		
+		return new ViewModel(array(
+            'user' => $userDetails,
+        ));
+	}
 	 
 	public function getUserTable()
     {
@@ -130,9 +151,9 @@ class IndexController extends AbstractActionController
         return $this->userTable;
     }
 	
+	//generate password
 	public static function criptPassword($password){
-		$userPassword = new UserPassword();
-		$encyptPass = $userPassword->create($password);
-		return $encyptPass;
+		
+		return md5($password);
 	}
 }

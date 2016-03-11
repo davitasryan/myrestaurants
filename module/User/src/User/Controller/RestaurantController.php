@@ -10,6 +10,7 @@ use User\Form\RestaurantForm;
 class RestaurantController extends AbstractActionController
 {
 	protected $restaurantTable;
+	protected $userFavoriteRestaurant;
 	
     public function indexAction()
     {
@@ -59,16 +60,14 @@ class RestaurantController extends AbstractActionController
             ));
         }
 		
-		
-        $form  = new RestaurantForm();
+		$form  = new RestaurantForm();
 		 
         $form->bind($rest);
         $form->get('submit')->setAttribute('value', 'Edit');
 
         $request = $this->getRequest();
         if ($request->isPost()) {
-			
-		
+				
             $form->setInputFilter($rest->getInputFilter());
 			
 			$saveData = $request->getPost();
@@ -91,7 +90,8 @@ class RestaurantController extends AbstractActionController
             'form' => $form,
         );
     }
-
+	
+	
     public function deleteAction()
     {
 		$id = (int) $this->params()->fromRoute('id', 0);
@@ -126,4 +126,6 @@ class RestaurantController extends AbstractActionController
         }
         return $this->restaurantTable;
     }
+	
+
 }

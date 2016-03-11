@@ -11,7 +11,7 @@ create table `user` (
   avatar varchar(255),
   phone varchar(20),
   email varchar(80) not null,
-  password binary(60) NOT NULL,
+  password varchar(100) NOT NULL,
   PRIMARY KEY (id),
   UNIQUE INDEX (email)
 )ENGINE = INNODB ;

@@ -1,5 +1,5 @@
 <?php
- 
+
 $title = 'Restaurants';
 $this->headTitle($title);
 ?>
@@ -21,8 +21,10 @@ $this->headTitle($title);
     <td>
         <a href="<?php echo $this->url('restaurant',
             array('action'=>'edit', 'id' => $restaurant->id));?>">Update</a>
-        <a href="<?php echo $this->url('restaurant',
-            array('action'=>'delete', 'id' => $restaurant->id));?>">Delete</a>
+    </td>
+	<td>
+        <a href="<?php echo $this->url('userFavoriteRestaurant',
+            array('action'=>'favorite', 'id' => $restaurant->id));?>">Add to Favorites</a>
     </td>
 </tr>
 <?php endforeach; ?>
