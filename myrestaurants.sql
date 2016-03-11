@@ -28,16 +28,16 @@ create table restaurant (
   UNIQUE INDEX (lat, lng)
 )ENGINE=INNODB;
 
-create table restaurant_images (
+create table restaurantImages (
   id int(11) not null AUTO_INCREMENT,
   restaurant_id int(11) not null,
-  name varchar(100),
+  fileupload varchar(100),
   PRIMARY KEY (id),
   FOREIGN KEY (restaurant_id) 
         REFERENCES restaurant(id)
 )ENGINE=INNODB;
 
-create table user_favorite_restaurant (
+create table userFavoriteRestaurant (
   user_id int(11) not null,
   restaurant_id int(11) not null,
   PRIMARY KEY (user_id, restaurant_id),

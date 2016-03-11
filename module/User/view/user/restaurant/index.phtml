@@ -26,6 +26,10 @@ $this->headTitle($title);
         <a href="<?php echo $this->url('userFavoriteRestaurant',
             array('action'=>'favorite', 'id' => $restaurant->id));?>">Add to Favorites</a>
     </td>
+	<td>
+        <a href="<?php echo $this->url('restaurant',
+            array('action'=>'restaurantImages', 'id' => $restaurant->id));?>">Upload Photo</a>
+    </td>
 </tr>
 <?php endforeach; ?>
 </table>

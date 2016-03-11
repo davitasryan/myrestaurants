@@ -9,6 +9,8 @@ namespace User;
  use Zend\Db\TableGateway\TableGateway;
  use User\Model\Restaurant;
  use User\Model\RestaurantTable;
+ use User\Model\RestaurantImages;
+ use User\Model\RestaurantImagesTable;
  use User\Model\UserFavoriteRestaurant;
  use User\Model\UserFavoriteRestaurantTable;
 
@@ -70,6 +72,17 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface
                     $resultSetPrototype = new ResultSet();
                     $resultSetPrototype->setArrayObjectPrototype(new UserFavoriteRestaurant());
                     return new TableGateway('userFavoriteRestaurant', $dbAdapter, null, $resultSetPrototype);
+                },
+				'User\Model\RestaurantImagesTable' =>  function($sm) {
+                    $tableGateway = $sm->get('RestaurantImagesTableGateway');
+                    $table = new RestaurantImagesTable($tableGateway);
+                    return $table;
+                },
+                'RestaurantImagesTableGateway' => function ($sm) {
+                    $dbAdapter = $sm->get('Zend\Db\Adapter\Adapter');
+                    $resultSetPrototype = new ResultSet();
+                    $resultSetPrototype->setArrayObjectPrototype(new RestaurantImages());
+                    return new TableGateway('restaurantImages', $dbAdapter, null, $resultSetPrototype);
                 },
 				
             ),

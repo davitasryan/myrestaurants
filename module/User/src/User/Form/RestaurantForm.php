@@ -1,9 +1,7 @@
 <?php
-
  namespace User\Form;
-
+ 
  use Zend\Form\Form;
-
  class RestaurantForm extends Form
  {
     public function __construct($name = null)
@@ -69,7 +67,6 @@
 				'id'  => 'contact',
 			),
         ));		
-
         $this->add(array(
             'name' => 'submit',
             'type' => 'Submit',

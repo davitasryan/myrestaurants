@@ -1,0 +1,26 @@
+ <?php
+ $title = 'Upload Image';
+ $this->headTitle($title);
+ ?>
+ <h1><?php echo $this->escapeHtml($title); ?></h1>
+ 
+<div style="height:800px">
+ <?php
+$form = $this->form;
+$form->setAttribute('action',
+                    $this->url('restaurant', //your route name ...
+                               array('controller'=>'restaurant', 'action' => 'restaurantImages'))); 
+$form->prepare();
+echo $this->form()->openTag($form);
+ ?>
+
+    <div class="form-element">
+        
+		<?php echo $this->formRow($form->get('fileupload')); ?>
+		<?php echo $this->formHidden($form->get('restaurant_id')); ?>
+		<?php echo $this->formSubmit($form->get('submit')); ?>
+    </div>
+
+    
+
+<?php echo $this->form()->closeTag(); ?>

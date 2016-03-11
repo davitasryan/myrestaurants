@@ -5,6 +5,7 @@ return array(
             'User\Controller\Index' => 'User\Controller\IndexController',
 			'User\Controller\Restaurant' => 'User\Controller\RestaurantController',
 			'User\Controller\UserFavoriteRestaurant' => 'User\Controller\UserFavoriteRestaurantController',
+			'User\Controller\RestaurantImages' => 'User\Controller\RestaurantImagesController',
         ),
     ),
 	 
