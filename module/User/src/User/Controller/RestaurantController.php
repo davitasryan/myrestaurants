@@ -177,7 +177,7 @@ class RestaurantController extends AbstractActionController
             $form->setInputFilter($profile->getInputFilter());
            
 			$File    = $this->params()->fromFiles('fileupload');
-			$fileName = end(explode('\\',$File['tmp_name'])).'_'.$File['name'];
+			//$fileName = end(explode('/',$File['tmp_name'])).'_'.$File['name'];
 			
             $data    = array_merge_recursive(
 				$this->getRequest()->getPost()->toArray(),           
@@ -208,10 +208,15 @@ class RestaurantController extends AbstractActionController
 					if(!file_exists('public/uploads/')){
 						mkdir('public/uploads/');
 					}
+					$fileInfo = $adapter->getFileInfo();
+					$fileName = $fileInfo["fileupload"]["name"];
+					
 					$adapter->setDestination('public/uploads/');
+					
 					if ($adapter->receive()) {
 						
 						$profile->exchangeArray($form->getData());
+						
 						$profile->fileupload = $fileName;
 						$this->getRestaurantImagesTable()->saveRestaurantImages($profile);
 						

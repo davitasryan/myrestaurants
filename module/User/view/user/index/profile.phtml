@@ -6,6 +6,10 @@ $this->headTitle($title);
 $logUser = $this->identity();
 
 echo $this->gravatar($user->email)->getImgTag();
+
+$gender = ($user->gender == 1) 
+				? 'Male' 
+				: (($user->gender == 2) ? 'Female' : '');
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 <table class="table">
@@ -20,7 +24,7 @@ echo $this->gravatar($user->email)->getImgTag();
 <tr>
     <td><?php echo $this->escapeHtml($user->name);?></td>
     <td><?php echo $this->escapeHtml($user->email);?></td>
-	<td><?php echo $this->escapeHtml(($user->gender == 1) ? 'Male' : 'Female');?></td>
+	<td><?php echo $this->escapeHtml($gender);?></td>
 	<td><?php echo $this->escapeHtml($user->age);?></td>
 	<td><?php echo $this->escapeHtml($user->occupancy);?></td>
     
