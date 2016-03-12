@@ -16,11 +16,12 @@ echo $this->form()->openTag($form);
 <tr>
     <td><?php echo $this->formRow($form->get('email')); ?></td>
 	<td><?php echo $this->formRow($form->get('password')); ?></td>
-	<td><?php echo $this->formRow($form->get('rememberme')); ?></td>
+	
 </tr>
 
 </table>
 <?php
+echo $this->formRow($form->get('rememberme')); 
 echo $this->formSubmit($form->get('submit'));
 echo $this->form()->closeTag();
 ?>

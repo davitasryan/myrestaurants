@@ -16,7 +16,7 @@ class AuthForm extends Form
                 'type'  => 'email',
             ),
             'options' => array(
-                'label' => 'Email',
+                'label' => '',
             ),
         ));
         $this->add(array(
@@ -25,7 +25,7 @@ class AuthForm extends Form
                 'type'  => 'password',
             ),
             'options' => array(
-                'label' => 'Password',
+                'label' => '',
             ),
         ));
         $this->add(array(
