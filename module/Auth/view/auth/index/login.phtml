@@ -1,13 +1,26 @@
 <h1>Login </h1>
+
 <?php
 $form = $this->form;
 $form->setAttribute('action', $this->url('auth/default', array('controller' => 'index', 'action' => 'login')));
 $form->prepare();
-
 echo $this->form()->openTag($form);
-echo $this->formRow($form->get('email'));
-echo $this->formRow($form->get('password'));
-echo $this->formRow($form->get('rememberme'));
+
+?>
+<table class="table">
+<tr>
+    <th>Email</th>
+	<th>Password</th>
+    <th>&nbsp;</th>
+</tr>
+<tr>
+    <td><?php echo $this->formRow($form->get('email')); ?></td>
+	<td><?php echo $this->formRow($form->get('password')); ?></td>
+	<td><?php echo $this->formRow($form->get('rememberme')); ?></td>
+</tr>
+
+</table>
+<?php
 echo $this->formSubmit($form->get('submit'));
 echo $this->form()->closeTag();
 ?>
