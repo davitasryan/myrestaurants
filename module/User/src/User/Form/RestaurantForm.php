@@ -20,14 +20,14 @@
 			),
             'type' => 'Text',
             'options' => array(
-                'label' => 'Name',
+                'label' => '',
             ),
         ));
 		$this->add(array(
             'name' => 'address',
             'type' => 'Text',
             'options' => array(
-                'label' => 'Address',
+                'label' => '',
             ),
 			'attributes' => array(
 				'id'  => 'address',
@@ -51,7 +51,7 @@
             'name' => 'site',
             'type' => 'Text',
             'options' => array(
-                'label' => 'Url',
+                'label' => '',
             ),
 			'attributes' => array(
 				'id'  => 'site',
@@ -61,7 +61,7 @@
             'name' => 'contact',
             'type' => 'Text',
             'options' => array(
-                'label' => 'Contact',
+                'label' => '',
             ),
 			'attributes' => array(
 				'id'  => 'contact',

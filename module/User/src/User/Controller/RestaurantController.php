@@ -92,6 +92,7 @@ class RestaurantController extends AbstractActionController
         return array(
             'id' => $id,
             'form' => $form,
+			'rest' => $rest
         );
     }
 	
@@ -99,9 +100,9 @@ class RestaurantController extends AbstractActionController
     public function deleteAction()
     {
 		$id = (int) $this->params()->fromRoute('id', 0);
-         if (!$id) {
-             return $this->redirect()->toRoute('restaurant');
-         }
+        if (!$id) {
+            return $this->redirect()->toRoute('restaurant');
+        }
 
          $request = $this->getRequest();
          if ($request->isPost()) {
@@ -121,6 +122,31 @@ class RestaurantController extends AbstractActionController
              'restaurant' => $this->getRestaurantTable()->getRestaurant($id)
          );
     }
+	
+	public function viewAction()
+	{
+		$id = (int) $this->params()->fromRoute('id', 0);
+        if (!$id) {
+            return $this->redirect()->toRoute('restaurant');
+        }
+		
+		try {
+            $rest = $this->getRestaurantTable()->getRestaurant($id);
+        }
+        catch (\Exception $ex) {
+            return $this->redirect()->toRoute('restaurant', array(
+                'action' => 'index'
+            ));
+        }
+		
+		$images = $this->getRestaurantImagesTable()->getRestaurantImages($id);
+		
+		return array(
+            'id'    => $id,
+            'restaurant' => $rest,
+			'images' => $images
+        );
+	}
 	 
 	public function getRestaurantTable()
     {
@@ -161,7 +187,7 @@ class RestaurantController extends AbstractActionController
               *  and assign $data like the following 
 			  */
 			$File    = $this->params()->fromFiles('fileupload');
-			$fileName = end(explode('\\',$File['tmp_name'])).$File['name'];
+			$fileName = end(explode('\\',$File['tmp_name'])).'_'.$File['name'];
 			
             $data    = array_merge_recursive(
 				$this->getRequest()->getPost()->toArray(),           
@@ -188,19 +214,21 @@ class RestaurantController extends AbstractActionController
 					} //set formElementErrors
 					$form->setMessages(array('fileupload'=>$error ));
 				} else {
-					$adapter->setDestination('data/uploads');
+					$adapter->setDestination('public/uploads/');
 					if ($adapter->receive()) {
 						
 						$profile->exchangeArray($form->getData());
 						$profile->fileupload = $fileName;
 						$this->getRestaurantImagesTable()->saveRestaurantImages($profile);
+						
+						return $this->redirect()->toRoute('restaurant', array('action' => 'view','id' =>$profile->restaurant_id));
 						/*
 						return $this->forward()->dispatch('User\Controller\RestaurantImages', array(
 						  'action' => 'save',
 						  'profile'   => $profile
 						));
 						*/
-						echo 'Profile Name '.$fileName;die;
+						
 					}
 				}  
             } 
@@ -212,52 +240,8 @@ class RestaurantController extends AbstractActionController
 			$form->get('restaurant_id')->setValue($id);
 		}
           
-        return array('form' => $form);
-    
-/*
-		$form = new RestaurantImagesForm();
-		$request = $this->getRequest();
-	
-		if ($request->isPost()) {
-			
-			$rImages = new RestaurantImages();
-            $form->setInputFilter($rImages->getInputFilter());
-			
-			$nonFile = $request->getPost()->toArray();
-            $File    = $this->params()->fromFiles('name');
-			
-            $data = array_merge(
-                 $nonFile,
-                 array('name'=> $File['name'])
-             );
-			
-	/*			
-			$data = array_merge_recursive(
-				$request->getPost()->toArray(),
-				$request->getFiles()->toArray()
-			);
-	*/
-/*
-			$form->setData($data);
-			
-			var_dump($form->isValid(), $data);die;
-			if ($form->isValid()) {
-				$data = $form->getData();
-				var_dump($data);die;
-				$this->getRestaurantTable()->saveRestaurant($rest);
-                return $this->redirect()->toRoute('restaurant');
-				
-			}
-		}else{
-			$id = (int) $this->params()->fromRoute('id', 0);
-			if (!$id) {
-				 return $this->redirect()->toRoute('restaurant');
-			}
-			$form->get('restaurant_id')->setValue($id);
-		}
+        return array('form' => $form);  
 
-		return array('form' => $form);
-*/
 	}
 	
 

@@ -11,7 +11,7 @@ class UserFavoriteRestaurant
 	public $restaurant_id;
 	
 	protected $inputFilter; 
-
+	
 	public function exchangeArray($data)
 	{
 		$this->user_id     = (!empty($data['user_id'])) ? $data['user_id'] : null;

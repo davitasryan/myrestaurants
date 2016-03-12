@@ -21,7 +21,7 @@ class RestaurantImagesTable
 
     public function getRestaurantImages($restaurant_id)
     {
-        $id  = (int) $id;
+        $restaurant_id  = (int) $restaurant_id;
         $resultSet = $this->tableGateway->select(array('restaurant_id' => $restaurant_id));
         
         return $resultSet;

@@ -69,6 +69,30 @@ class UserFavoriteRestaurantController extends AbstractActionController
                 'action' => 'index'
             ));
     }
+	
+	public function unlikeAction(){
+		$restaurant_id = (int) $this->params()->fromRoute('id', 0);
+        if (!$restaurant_id) {
+            return $this->redirect()->toRoute('restaurant', array(
+                'action' => 'add'
+            ));
+        }
+		
+		$user_id = (int) $this->params()->fromRoute('id2', 0);
+        if (!$user_id) {
+            return $this->redirect()->toRoute('restaurant', array(
+                'action' => 'add'
+            ));
+        }
+		
+		$this->getUserFavoriteRestaurantTable()->deleteRestaurant($user_id, $restaurant_id);
+		
+		return $this->redirect()->toRoute('user', array(
+                'action' => 'profile',
+				'id' => $user_id
+            ));
+		
+	}
 
 	public function getUserFavoriteRestaurantTable()
     {

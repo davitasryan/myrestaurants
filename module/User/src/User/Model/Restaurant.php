@@ -14,8 +14,19 @@ class Restaurant
 	public $lng;
 	public $contact;
 	public $site;
-
-	protected $inputFilter; 
+	
+	protected $userFavoriteRestaurants;
+	protected $inputFilter;
+	
+	public function setUserFavoriteRestaurants($userFavoriteRestaurants)
+    {
+        $this->userFavoriteRestaurants = $userFavoriteRestaurants;
+    }
+ 
+    public function getUserFavoriteRestaurants()
+    {
+        return $this->userFavoriteRestaurants;
+    }
 
 	public function exchangeArray($data)
 	{

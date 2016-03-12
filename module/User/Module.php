@@ -13,6 +13,7 @@ namespace User;
  use User\Model\RestaurantImagesTable;
  use User\Model\UserFavoriteRestaurant;
  use User\Model\UserFavoriteRestaurantTable;
+ use User\Model\UserFavoriteRestaurantMapper;
 
 
 class Module implements AutoloaderProviderInterface, ConfigProviderInterface
@@ -84,7 +85,6 @@ class Module implements AutoloaderProviderInterface, ConfigProviderInterface
                     $resultSetPrototype->setArrayObjectPrototype(new RestaurantImages());
                     return new TableGateway('restaurantImages', $dbAdapter, null, $resultSetPrototype);
                 },
-				
             ),
         );
     }

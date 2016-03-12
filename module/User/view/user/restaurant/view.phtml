@@ -1,0 +1,83 @@
+  <style>
+
+  </style>
+<?php
+$title = 'View';
+$this->headTitle($title);
+
+//$this->headScript()->appendFile('/js/slide.js');
+?>
+ <link rel="stylesheet" type="text/css" href="/css/jcarousel.basic.css"> 
+<h1><?php echo $this->escapeHtml($title); ?></h1>
+<p>
+    <a href="<?php echo $this->url('restaurant',
+            array('action'=>'edit', 'id' => $restaurant->id));?>">Update</a>
+	<a href="<?php echo $this->url('restaurant',
+            array('action'=>'restaurantImages', 'id' => $restaurant->id));?>">Upload Photo</a>
+</p>
+
+<table class="table">
+<tr>
+    <th>Name</th>
+    <th>Address</th>
+	<th>Contact</th>
+	<th>Website</th>
+    <th>&nbsp;</th>
+</tr>
+
+<tr>
+    <td><?php echo $this->escapeHtml($restaurant->name);?></td>
+    <td><?php echo $this->escapeHtml($restaurant->address);?></td>
+    <td><?php echo $this->escapeHtml($restaurant->contact);?></td>
+	<td><a href="<?php echo $this->escapeHtml($restaurant->site);?>" target="_blank"><?php echo $this->escapeHtml($restaurant->site);?></a></td>
+</tr>
+
+</table>
+
+<div class="container">
+  <br>
+  <div id="myCarousel" class="carousel slide" data-ride="carousel">
+    
+    <!-- Wrapper for slides -->
+    <div class="carousel-inner" role="listbox">
+		<?php $i = 1;
+		foreach($images as $image){ ?>
+			  <div class="item <?= ($i == 1) ? "active" : "" ?>">
+				<img src="/uploads/<?= $image->fileupload; ?>" width="460" height="345" >
+			  </div>
+		<?php 
+			$i++;
+		} ?>	  
+
+    </div>
+
+    <!-- Left and right controls -->
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+      <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+      <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+      <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+      <span class="sr-only">Next</span>
+    </a>
+  </div>
+</div>
+<?php 
+$lat = !empty($restaurant->lat) ? $restaurant->lat : 40.19886899999999;
+$lng = !empty($restaurant->lng) ? $restaurant->lng : 44.528594;
+?>
+<br />
+<div id="map" class="container" style=""></div>
+
+<script>
+  function initMap() {
+    var mapDiv = document.getElementById('map');
+    var map = new google.maps.Map(mapDiv, {
+		center: {lat: <?= $lat ?>, lng: <?= $lng ?>},
+        zoom: 17,
+        mapTypeId: google.maps.MapTypeId.ROADMAP
+    });
+  }
+</script>
+
+<?php echo $this->inlineScript()->prependFile('https://maps.googleapis.com/maps/api/js?libraries=places&callback=initMap') ?>

@@ -19,21 +19,21 @@
             'name' => 'name',
             'type' => 'Text',
             'options' => array(
-                'label' => 'Name',
+                'label' => '',
             ),
         ));
         $this->add(array(
             'name' => 'email',
             'type' => 'Email',
             'options' => array(
-                'label' => 'Email',
+                'label' => '',
             ),
         ));
 		$this->add(array(
             'name' => 'age',
             'type' => 'Text',
             'options' => array(
-                'label' => 'Age',
+                'label' => '',
             ),
         ));
 		$this->add(array(
@@ -51,7 +51,7 @@
             'name' => 'occupancy',
             'type' => 'Text',
             'options' => array(
-                'label' => 'Occupancy',
+                'label' => '',
             ),
         ));
 		$this->add(array(
@@ -65,14 +65,14 @@
             'name' => 'phone',
             'type' => 'Text',
             'options' => array(
-                'label' => 'Phone',
+                'label' => '',
             ),
         ));
         $this->add(array(
             'name' => 'password',
             'type' => 'Password',
             'options' => array(
-                'label' => 'Password',
+                'label' => '',
             ),
         ));		
 

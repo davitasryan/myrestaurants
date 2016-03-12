@@ -1,5 +1,5 @@
 <?php echo $this->doctype(); ?>
-
+<?php $logUser = $this->identity(); ?>
 <html lang="en">
     <head>
         <meta charset="utf-8">
@@ -39,12 +39,14 @@
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         <li ><a href="<?php echo $this->url('home') ?>"><?php echo $this->translate('Home') ?></a></li>
-						<?php if($this->identity()){ ?>
+						<?php if($logUser){ ?>
 							<li ><a href="<?php echo $this->url('user') ?>"><?php echo $this->translate('Users') ?></a></li>
 							<li ><a href="<?php echo $this->url('restaurant') ?>"><?php echo $this->translate('Restaurants') ?></a></li>
+							<li><a href="<?php echo $this->url('user', array('action'=>'profile', 'id' => $logUser->id));?>">Profile</a></li>
 							<li><a href="<?php echo $this->url('auth/default', array('controller' => 'index', 'action' => 'logout'));?>"><?php echo $this->translate('Logout'); ?></a> </li>
 						<?php }else{ ?>
 							<li ><a href="<?php echo $this->url('user',array('action' => 'add')) ?>"><?php echo $this->translate('Registration') ?></a></li>
+							
 							<li><a href="<?php echo $this->url('auth');?>"><?php echo $this->translate('Login'); ?></a> </li>
 						<?php } ?>
                     </ul>

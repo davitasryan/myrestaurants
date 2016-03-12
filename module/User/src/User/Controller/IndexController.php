@@ -11,6 +11,10 @@ use User\Form\UserForm;
 class IndexController extends AbstractActionController
 {
 	protected $userTable;
+	protected $userFavoriteRestaurantTable;
+	protected $userFavoriteRestaurantsMapper;
+	protected $restaurant;
+	
 	
     public function indexAction()
     {
@@ -85,7 +89,7 @@ class IndexController extends AbstractActionController
 			
             if ($form->isValid()) {
                 $this->getUserTable()->saveUser($user);
-                return $this->redirect()->toRoute('user');
+                return $this->redirect()->toRoute('user',array('action' => 'profile', 'id' => $id));
             }
         }
 
@@ -137,8 +141,17 @@ class IndexController extends AbstractActionController
             ));
         }
 		
+		$restaurants = array();
+		$userFavRestaurants = $this->getUserFavoriteRestaurantTable()->getUserFavoriteRestaurants($id);
+		foreach($userFavRestaurants as $usrResstaurant){
+			$restaurants[] = $this->getRestaurantTable()->getRestaurant($usrResstaurant->restaurant_id);
+		}
+		
+		//$restaurants = $this->getUserFavoriteRestaurantsMapper()->findUserRestaurants($id);
+		//var_dump($this->mapper->findAll());die;
 		return new ViewModel(array(
             'user' => $userDetails,
+			'restaurants' => $restaurants
         ));
 	}
 	 
@@ -149,6 +162,24 @@ class IndexController extends AbstractActionController
             $this->userTable = $sm->get('User\Model\UserTable');
         }
         return $this->userTable;
+    }
+	
+	public function getUserFavoriteRestaurantTable()
+    {
+        if (!$this->userFavoriteRestaurantTable) {
+            $sm = $this->getServiceLocator();
+            $this->userFavoriteRestaurantTable = $sm->get('User\Model\UserFavoriteRestaurantTable');
+        }
+        return $this->userFavoriteRestaurantTable;
+    }
+	
+	public function getRestaurantTable()
+    {
+        if (!$this->restaurant) {
+            $sm = $this->getServiceLocator();
+            $this->restaurant = $sm->get('User\Model\RestaurantTable');
+        }
+        return $this->restaurant;
     }
 	
 	//generate password

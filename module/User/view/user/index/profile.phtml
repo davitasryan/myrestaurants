@@ -4,18 +4,60 @@ $title = 'User: '.$user->name;
 $this->headTitle($title);
 
 $logUser = $this->identity();
+
+echo $this->gravatar($user->email)->getImgTag();
 ?>
 <h1><?php echo $this->escapeHtml($title); ?></h1>
 <table class="table">
 <tr>
     <th>Name</th>
     <th>Email</th>
+	<th>Gendder</th>
+	<th>Age</th>
+	<th>Occupancy</th>
     <th>&nbsp;</th>
 </tr>
 <tr>
     <td><?php echo $this->escapeHtml($user->name);?></td>
     <td><?php echo $this->escapeHtml($user->email);?></td>
+	<td><?php echo $this->escapeHtml(($user->gender == 1) ? 'Male' : 'Female');?></td>
+	<td><?php echo $this->escapeHtml($user->age);?></td>
+	<td><?php echo $this->escapeHtml($user->occupancy);?></td>
     
 </tr>
 
+</table>
+
+<h1><?php echo $this->escapeHtml('User Favorite Restaurants'); ?></h1>
+<table class="table">
+<tr>
+    <th>Name</th>
+    <th>Address</th>
+    <th>&nbsp;</th>
+</tr>
+<?php foreach ($restaurants as $restaurant) : ?>
+<tr>
+    <td><?php echo $this->escapeHtml($restaurant->name);?></td>
+    <td><?php echo $this->escapeHtml($restaurant->address);?></td>
+    <td>
+        <a href="<?php echo $this->url('restaurant',
+            array('action'=>'view', 'id' => $restaurant->id));?>">View</a>
+    </td>
+    <td>
+        <a href="<?php echo $this->url('restaurant',
+            array('action'=>'edit', 'id' => $restaurant->id));?>">Update</a>
+    </td>
+	<?php if($logUser && $logUser->id == $user->id){ ?>
+	<td>
+        <a href="<?php echo $this->url('userFavoriteRestaurant',
+            array('action'=>'unlike', 'id' => $restaurant->id, 'id2' => $user->id));?>">Remove From Favorites</a>
+    </td>
+	<?php } ?>
+	<td>
+        <a href="<?php echo $this->url('restaurant',
+            array('action'=>'restaurantImages', 'id' => $restaurant->id));?>">Upload Photo</a>
+    </td>
+	
+</tr>
+<?php endforeach; ?>
 </table>

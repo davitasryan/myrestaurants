@@ -1,63 +1,6 @@
-<?php
-
- $title = 'Edit Restaurant';
- $this->headTitle($title);
-?>
-<h1><?php echo $this->escapeHtml($title); ?></h1>
- 
-<div style="height:800px">
-	<?php
-	$form = $this->form;
-	$form->setAttribute('action', $this->url(
-		'restaurant',
-		array(
-			'action' => 'edit',
-			'id'     => $this->id,
-		)
-	));
-	$form->prepare();
-	echo $this->form()->openTag($form);
-	
-	echo $this->formHidden($form->get('id')); 
-	echo $this->formHidden($form->get('lat'));
-	echo $this->formHidden($form->get('lng'));
-	echo $this->formHidden($form->get('name'));
-	?>
-	<table class="table">
-	<tr>
-		<th>Address</th>
-		<th>Contact</th>
-		<th>Website</th>
-		<th>&nbsp;</th>
-	</tr>
-
-	<tr>
-		<td><?php echo $this->formRow($form->get('address')); ?></td>
-		<td><?php echo $this->formRow($form->get('contact')); ?></td>
-		<td><?php echo $this->formRow($form->get('site')); ?></td>
-		
-	</tr>
-
-	</table>
-	<?php
-	echo $this->formSubmit($form->get('submit'));
-	echo $this->form()->closeTag();
-	?>
- 
-	<div id="map"></div>
-	<?php echo $this->inlineScript()->prependFile('https://maps.googleapis.com/maps/api/js?libraries=places&callback=initAutocomplete') ?>
-		
-</div>
-
-<?php 
-$lat = !empty($rest->lat) ? $rest->lat : 40.19886899999999;
-$lng = !empty($rest->lng) ? $rest->lng : 44.528594;
-?>
-
-<script>
-  function initAutocomplete() {
+function initAutocomplete() {
         var map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat: <?= $lat ?>, lng: <?= $lng ?>},
+          center: {lat: 40.19886899999999, lng: 44.528594},
           zoom: 17,
           mapTypeId: google.maps.MapTypeId.ROADMAP
         });
@@ -134,4 +77,3 @@ $(document).keypress(
 			event.preventDefault();
 		}
 });
-</script>

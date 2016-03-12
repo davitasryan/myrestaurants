@@ -28,10 +28,11 @@ return array(
 			'userFavoriteRestaurant' => array(
                 'type'    => 'segment',
                 'options' => array(
-                    'route'    => '/userfavoriterestaurant[/:action][/:id]',
+                    'route'    => '/userfavoriterestaurant[/:action][/:id][/:id2]',
                     'constraints' => array(
                         'action' => '[a-zA-Z][a-zA-Z0-9_-]*',
                         'id'     => '[0-9]+',
+						'id2'     => '[0-9]+',
                     ),
                     'defaults' => array(
                         'controller' => 'User\Controller\UserFavoriteRestaurant',
