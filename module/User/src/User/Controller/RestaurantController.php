@@ -125,6 +125,7 @@ class RestaurantController extends AbstractActionController
 	
 	public function viewAction()
 	{
+				
 		$id = (int) $this->params()->fromRoute('id', 0);
         if (!$id) {
             return $this->redirect()->toRoute('restaurant');
@@ -174,18 +175,7 @@ class RestaurantController extends AbstractActionController
              
             $profile = new RestaurantImages();
             $form->setInputFilter($profile->getInputFilter());
-             /*
-            $nonFile = $request->getPost()->toArray();
-            $File    = $this->params()->fromFiles('fileupload');
-            $data = array_merge(
-                 $nonFile, //POST 
-                 array('fileupload'=> $File['name']) //FILE...
-             );*/
-             
-            /** if you're using ZF >= 2.1.1  
-              *  you should update to the latest ZF2 version
-              *  and assign $data like the following 
-			  */
+           
 			$File    = $this->params()->fromFiles('fileupload');
 			$fileName = end(explode('\\',$File['tmp_name'])).'_'.$File['name'];
 			
@@ -199,10 +189,10 @@ class RestaurantController extends AbstractActionController
             $form->setData($data);
               
             if ($form->isValid()) {
-                $size = new Size(array('min'=>2000000)); //minimum bytes filesize
+                $size = new Size(array('min'=>2000000));
      
 				$adapter = new \Zend\File\Transfer\Adapter\Http(); 
-				//validator can be more than one...
+				
 				$adapter->setValidators(array($size), $File['name']);
 				 
 				if (!$adapter->isValid()){
@@ -214,6 +204,10 @@ class RestaurantController extends AbstractActionController
 					} //set formElementErrors
 					$form->setMessages(array('fileupload'=>$error ));
 				} else {
+					
+					if(!file_exists('public/uploads/')){
+						mkdir('public/uploads/');
+					}
 					$adapter->setDestination('public/uploads/');
 					if ($adapter->receive()) {
 						
